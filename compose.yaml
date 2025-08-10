@@ -1,0 +1,93 @@
+services:
+  server:
+    container_name: credit-php
+    image: yiisoftware/yii2-php:8.4-apache
+    volumes:
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      - ./:/app:delegated
+    ports:
+      - '8000:80'
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - postgres
+
+  db:
+    image: postgres
+    container_name: credit-postgres
+    restart: always
+    user: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=car-credit
+      - POSTGRES_USER=credit-app
+      - POSTGRES_PASSWORD=wow-much-secure-very-strong-so-unbreakable
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - postgres
+volumes:
+  db-data:
+
+networks:
+  postgres:
+    driver: bridge
+
+# phpstorm project files
+.idea
+*.iml
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# sublime text project / workspace files
+*.sublime-project
+*.sublime-workspace
+
+# visual studio code project files
+.vscode
+
+# windows thumbnail cache
+Thumbs.db
+
+# composer vendor dir
+/vendor
+# cubrid install dir
+/cubrid
+
+# composer itself is not needed
+composer.phar
+
+# composer.lock in applications is ignored since it's automatically created by composer when application is installed
+/apps/*/composer.lock
+
+# Mac DS_Store Files
+.DS_Store
+
+# phpunit itself is not needed
+phpunit.phar
+# local phpunit config
+/phpunit.xml
+.phpunit.result.cache
+
+# ignore dev installed apps and extensions
+/apps
+/extensions
+/packages
+
+# NPM packages
+/node_modules
+.env
+package-lock.json
