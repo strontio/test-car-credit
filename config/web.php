@@ -15,6 +15,10 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'hmMuuccygwnqideWNmezQR3XbBV_nIve',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
+
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -46,6 +50,13 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['api/v1/car'],
+                    'only' => ['index', 'view']
+                ],
+                'GET api/v1/credit/calculate' => 'api/v1/credit/calculate',
+                'POST api/v1/request' => 'api/v1/request/create',
             ],
         ],
     ],

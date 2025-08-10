@@ -18,6 +18,8 @@ class m250810_140513_create_credit_program_table extends Migration
             'max_initial_payment' => $this->integer(),
             'min_months' => $this->integer(),
             'max_months' => $this->integer(),
+            'credit_percent' => $this->double(2),
+            'program_name' => $this->string(),
         ]);
     }
 
